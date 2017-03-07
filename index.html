@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dog Adoption</title>
+<!--link to style sheet-->
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<!--create form-->
+<body>
+<h1>Snoop Dogg's Dogs</h1>
+<form method="get">
+<!--Selections for Breed-->
+	<p>
+		<label for="breed">Breed:</label>
+		<select name="breed" id="breed">
+			<option value="Lab-mix">Lab-mix</option>
+			<option value="Chihuahua-mix">Chihuahua-mix</option>
+			<option value="Pitbull-mix">Pitbull-mix</option>
+		</select>
+	</p>
+<!--Text box for name-->
+	<p>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name">
+    </p>
+<!--Text box for age-->
+	 <p>
+        <label for="age">Age:</label>
+        <input type="text" name="age" id="age">
+    </p>
+	<input type="submit" value="Submit" onclick="addtoDB()">
+</form>
+
+<!--Link to php select file showing results recorded-->
+<br>
+<a href="select.php">Show Adopted!</a>
+
+<!--AJAX Function, send data to database without refreshing page-->
+<script>
+function addtoDB() {
+  var xhttp; 
+// Check server status
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+        document.getElementById("submitted").innerHTML = "form submitted";
+    }
+  };
+//adding variables and grabbing elements by id
+  var breed = document.getElementById('breed').value;
+  var name = document.getElementById('name').value;
+  var age = document.getElementById('age').value;
+   
+  var queryString = "?breed=" + breed + "&name=" + name + "&age=" + age;
+  console.log(queryString);
+  xhttp.open("GET", "insert.php" + queryString, true);
+  xhttp.send(null); 
+}
+
+ </script>
